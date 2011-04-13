@@ -81,7 +81,7 @@
                                         ORDER BY taborder;');
 
 	
-	
+	$tabdisplay ='';
 	if ($tab->displaymenu == 1) {
 
         $tabdisplay .= "<style>            
@@ -140,11 +140,10 @@
         $pdffile[$key] = $options[$key]->pdffile;
         $externalurl[$key] = $options[$key]->externalurl;
 
-        if (!empty($pdffile[$key]) && !empty($externalurl[$key])) {
-            $content[$key] = get_string('cannotembed','tab');
-        } elseif (!empty($externalurl[$key])){
+        if (!empty($externalurl[$key])){
 
-           $content[$key] = "<iframe src='$externalurl[$key]' width='100%' height='500px' scrolling='yes' border='0' ></iframe>";
+           $content[$key] = "<iframe src=\"$externalurl[$key]\" width=\"100%\" height=\"500px\" scrolling=\"yes\" border=\"0\" ></iframe>";
+           
         } else {
             
             $content[$key] = file_rewrite_pluginfile_urls($options[$key]->tabcontent, 'pluginfile.php', $context->id, 'mod_tab', 'content', $options[$key]->id);
