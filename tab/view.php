@@ -139,7 +139,7 @@
         //Content must change accordingly
         $pdffile[$key] = $options[$key]->pdffile;
         $externalurl[$key] = $options[$key]->externalurl;
-        //use a radio button in form
+
         if (!empty($externalurl[$key])){
 
            $content[$key] = "<iframe src=\"$externalurl[$key]\" width=\"100%\" height=\"500px\" scrolling=\"yes\" border=\"0\" ></iframe>";

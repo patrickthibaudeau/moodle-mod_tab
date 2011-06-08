@@ -1,8 +1,7 @@
 TAB MODULE
 -----------------------------
 
-The tab module was built using the new yui (The Yahoo! User Interface Library) supplied with 
-Moodle version 1.9+. It came from the need to have a tab interface to display notes, lectures,
+The tab display module came from the need to have a tab interface to display notes, lectures,
 discussions and other material. In order to make the most out of this module, we activate the
 following filters: 
 	Database Auto-linking, 
@@ -25,6 +24,9 @@ INSTALLING THE TAB MODULE
 
 MAJOR REVISION
 ------------------------------
+Moodle 2.0 Version
+Added the possibility to embed web pages inside a tab.
+
 Added to version 2010062000
 1. Format. Each tab can use different Moodle text formating. See http://docs.moodle.org/en/Formatting_options for formatting options.
 2. Tabs can be ordered. That is, the position of tabs can be set according to a tab order number. Therfore even if a tab is

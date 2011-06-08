@@ -108,9 +108,12 @@ function tab_add_instance($tab) {
                     $option->tabcontentorder = $tab->tabcontentorder[$key];
                 }
 
+                /* No longer used
                 if (isset($tab->content[$key]['pdffile'])) {
                     $option->pdffile = $tab->content[$key]['pdffile'];
                 }
+                 *
+                 */
 
                 if (isset($tab->content[$key]['externalurl'])) {
                     $option->externalurl = $tab->content[$key]['externalurl'];
@@ -170,7 +173,10 @@ function tab_update_instance($tab) {
         $option = new object();
         $option->tabname = $value;
         $option->tabcontentorder = $tab->tabcontentorder[$key];
+        /* no longer used
         $option->pdffile = $tab->pdffile[$key];
+         * 
+         */
         $option->externalurl = $tab->externalurl[$key];
         //tab content is now an array due to the new editor
         $draftitemid = $tab->content[$key]['itemid'];

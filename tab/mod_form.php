@@ -52,7 +52,7 @@ class mod_tab_mod_form extends moodleform_mod {
         $repeatarray[] = $mform->createElement('header', 'tabs', get_string('tab','tab').' {no}');
         $repeatarray[] = $mform->createElement('text', 'tabname', get_string('tabname','tab'),array('size'=>'65'));
         $repeatarray[] = $mform->createElement('editor', 'content', get_string('tabcontent','tab'), null, $editoroptions);
-        $repeatarray[] = $mform->createElement('filemanager', 'pdffile', get_string('pdffile','tab'), null,array('subdirs' => 0, 'maxbytes' => 0, 'maxfiles' => 1, 'accepted_types' => array('.pdf')));
+        //$repeatarray[] = $mform->createElement('filemanager', 'pdffile', get_string('pdffile','tab'), null,array('subdirs' => 0, 'maxbytes' => 0, 'maxfiles' => 1, 'accepted_types' => array('.pdf')));
         $repeatarray[] = $mform->createElement('url', 'externalurl', get_string('externalurl', 'url'), array('size'=>'60'), array('usefilepicker'=>true));
         $repeatarray[] = $mform->createElement('hidden', 'revision', 1);
         $repeatarray[] = $mform->createElement('select', 'tabcontentorder', get_string('order','tab'),$taborderarray);

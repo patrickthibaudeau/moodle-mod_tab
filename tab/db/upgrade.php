@@ -118,6 +118,15 @@ function xmldb_tab_upgrade($oldversion=0) {
         upgrade_mod_savepoint(true, 2011040201, 'tab');
     }
 
+    if ($oldversion < 2011060700) {
+
+        //Removed support for pdf
+        //Will work on something new later
+
+        // tab savepoint reached
+        upgrade_mod_savepoint(true, 2011060700, 'tab');
+    }
+
 
 }
 
