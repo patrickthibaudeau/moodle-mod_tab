@@ -38,6 +38,8 @@
 
     require_course_login($course, true, $cm);
     $context = get_context_instance(CONTEXT_MODULE, $cm->id);
+    $coursecontext = get_context_instance_by_id(CONTEXT_COURSE, $course->id);
+    
     require_capability('mod/tab:view', $context);
     add_to_log($course->id, "tab", "view", "view.php?id=$cm->id", "$tab->id");
 
@@ -75,13 +77,14 @@
 	//$results = get_coursemodules_in_course('tab', $course->id); 
 	//Must get more information in order to display menu options properly.
 	//Therefore I cannot use get_coursemodules_in_course
-	$results = $DB->get_records_sql('SELECT {course_modules}.id as id, {tab}.name as name, {tab}.taborder as taborder, 
+	$results = $DB->get_records_sql('SELECT {course_modules}.id as id,{course_modules}.visible as visible, {tab}.name as name, {tab}.taborder as taborder,
                                         {tab}.menuname as menuname FROM ({modules} INNER JOIN {course_modules} ON {modules}.id = {course_modules}.module)
                                         INNER JOIN {tab} ON {course_modules}.instance = {tab}.id WHERE ((({modules}.name)=\'tab\') AND (({course_modules}.course)='.$course->id.'))
                                         ORDER BY taborder;');
 
 	
 	$tabdisplay ='';
+        
 	if ($tab->displaymenu == 1) {
 
         $tabdisplay .= "<style>            
@@ -97,14 +100,19 @@
 	foreach ($results as $result){ /// foreach
 	 //only print the tabs that have the same menu name
         if ($result->menuname == $tab->menuname){
-         $tabdisplay .=  '	<li';
+         //only print visible tabs within the menu
+           
+         if ($result->visible == 1 || has_capability('moodle/course:update', $coursecontext)){
+            $tabdisplay .=  '	<li';
 		 if($tab->name == $result->name){//old code for different color = if ($i % 2) {
 			$tabdisplay .=  ' class="row">';
 			} else {
 			$tabdisplay .=  '>';
 			}
-        $tabdisplay .=  	'<a href="view.php?id='.$result->id.'" >'.$result->name.'</a>';
-		}
+            $tabdisplay .=  	'<a href="view.php?id='.$result->id.'" >'.$result->name.'</a>';
+		
+                    }
+        }
   	$tabdisplay .=  '</li>'."\n";
 	$i++;
 	}
@@ -137,17 +145,24 @@
 
         //New conditions now exist. Must verify if embedding a pdf or url
         //Content must change accordingly
-        $pdffile[$key] = $options[$key]->pdffile;
+        //$pdffile[$key] = $options[$key]->pdffile;
+        
+
         $externalurl[$key] = $options[$key]->externalurl;
+        //Eventually give option for height within the form. Pass this by others, because it could be confusing.
+        $iframehieght[$key] = '600px';
 
         if (!empty($externalurl[$key])){
 
-           $content[$key] = "<iframe src=\"$externalurl[$key]\" width=\"100%\" height=\"500px\" scrolling=\"yes\" border=\"0\" ></iframe>";
+           $content[$key] = "<iframe src=\"$externalurl[$key]\" width=\"100%\" height=\"$iframehieght[$key]\" scrolling=\"auto\" border=\"0\" ></iframe>";
            
         } else {
             
+            if (empty($options[$key]->format)) {
+                $options[$key]->format = 1;
+            }
             $content[$key] = file_rewrite_pluginfile_urls($options[$key]->tabcontent, 'pluginfile.php', $context->id, 'mod_tab', 'content', $options[$key]->id);
-            $content[$key] = format_text($content[$key], $options[$key]->format, $editoroptions, $course->id);
+            $content[$key] = format_text($content[$key], $options[$key]->format, $editoroptions, $context);
         }		//Enter into proper div
 			
             $tabdisplay .=  '   <div class="TabbedPanelsContent"><p>'.$content[$key].'</p></div>'."\n";

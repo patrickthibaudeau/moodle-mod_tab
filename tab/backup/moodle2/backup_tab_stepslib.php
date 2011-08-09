@@ -15,7 +15,7 @@ class backup_tab_activity_structure_step extends backup_activity_structure_step 
         $tab_contents = new backup_nested_element('tab_contents');
         
         $tab_content = new backup_nested_element('tab_content', array('id'), array('tabname',
-            'tabcontent', 'tabcontentorder', 'contentformat', 'timemodified'));
+            'tabcontent', 'tabcontentorder', 'externalurl','contentformat', 'timemodified'));
 
         // Build the tree
         $tab->add_child($tab_contents);

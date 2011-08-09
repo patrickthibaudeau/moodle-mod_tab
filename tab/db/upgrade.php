@@ -118,15 +118,48 @@ function xmldb_tab_upgrade($oldversion=0) {
         upgrade_mod_savepoint(true, 2011040201, 'tab');
     }
 
-    if ($oldversion < 2011060700) {
+    if ($oldversion < 2011041300) {
 
-        //Removed support for pdf
-        //Will work on something new later
+        // Rename field externalurl on table tab_content to NEWNAMEGOESHERE
+        //Changes where done in the view.php file
 
         // tab savepoint reached
-        upgrade_mod_savepoint(true, 2011060700, 'tab');
+        upgrade_mod_savepoint(true, 2011041300, 'tab');
     }
 
+        if ($oldversion < 2011071100) {
+
+        // Define field id to be dropped from tab_content
+        $table = new xmldb_table('tab_content');
+        $field = new xmldb_field('pdffile');
+
+        // Conditionally launch drop field id
+        if ($dbman->field_exists($table, $field)) {
+            $dbman->drop_field($table, $field);
+        }
+
+        // tab savepoint reached
+        upgrade_mod_savepoint(true, 2011071100, 'tab');
+    }
+        if ($oldversion < 2011071101) {
+
+        // Changing nullability of field tabcontentorder on table tab_content to null
+        $table = new xmldb_table('tab_content');
+        $field = new xmldb_field('tabcontentorder', XMLDB_TYPE_INTEGER, '2', XMLDB_UNSIGNED, null, null, '1', 'tabcontent');
+
+        // Launch change of nullability for field tabcontentorder
+        $dbman->change_field_notnull($table, $field);
+
+        // tab savepoint reached
+        upgrade_mod_savepoint(true, 2011071101, 'tab');
+    }
+    if ($oldversion < 2011080800) {
+
+        // Fixed two undefined variables
+
+        // tab savepoint reached
+        upgrade_mod_savepoint(true, 20110080800, 'tab');
+    }
 
 }
 

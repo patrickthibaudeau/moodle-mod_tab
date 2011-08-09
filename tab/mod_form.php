@@ -29,7 +29,11 @@ class mod_tab_mod_form extends moodleform_mod {
         }
 	
         //following code used to create tabcontent order numbers
+        if (isset($_POST['optionid'])){
         $repeatnum = count($_POST['optionid']);
+        } else {
+            $repeatnum = 0;
+        }
         if ($repeatnum == 0) {
             $repeatnum=$DB->count_records('tab_content', array('tabid'=>$instance));
         }
@@ -52,12 +56,10 @@ class mod_tab_mod_form extends moodleform_mod {
         $repeatarray[] = $mform->createElement('header', 'tabs', get_string('tab','tab').' {no}');
         $repeatarray[] = $mform->createElement('text', 'tabname', get_string('tabname','tab'),array('size'=>'65'));
         $repeatarray[] = $mform->createElement('editor', 'content', get_string('tabcontent','tab'), null, $editoroptions);
-        //$repeatarray[] = $mform->createElement('filemanager', 'pdffile', get_string('pdffile','tab'), null,array('subdirs' => 0, 'maxbytes' => 0, 'maxfiles' => 1, 'accepted_types' => array('.pdf')));
-        $repeatarray[] = $mform->createElement('url', 'externalurl', get_string('externalurl', 'url'), array('size'=>'60'), array('usefilepicker'=>true));
+        $repeatarray[] = $mform->createElement('url', 'externalurl', get_string('externalurl', 'tab'), array('size'=>'60'), array('usefilepicker'=>true));
         $repeatarray[] = $mform->createElement('hidden', 'revision', 1);
         $repeatarray[] = $mform->createElement('select', 'tabcontentorder', get_string('order','tab'),$taborderarray);
         $repeatarray[] = $mform->createElement('hidden', 'optionid', 0);
-
 
         if ($this->_instance) {
             $repeatno=$DB->count_records('tab_content', array('tabid'=>$instance));
@@ -123,9 +125,7 @@ class mod_tab_mod_form extends moodleform_mod {
                 $default_values['content['.$key.']']['itemid'] = $draftitemid;
                
 
-                $default_values['format['.$key.']'] = $options[$key]->format;
-                $default_values['revision['.$key.']'] = $options[$key]->revision;
-                $default_values['pdffile['.$key.']'] = $options[$key]->pdffile;
+                //$default_values['format['.$key.']'] = $options[$key]->format;
                 $default_values['externalurl['.$key.']'] = $options[$key]->externalurl;
                 $default_values['tabcontentorder['.$key.']'] = $options[$key]->tabcontentorder;
                 $default_values['optionid['.$key.']'] = $tabids[$key];

@@ -107,14 +107,7 @@ function tab_add_instance($tab) {
                 if (isset($tab->tabcontentorder[$key])) {
                     $option->tabcontentorder = $tab->tabcontentorder[$key];
                 }
-
-                /* No longer used
-                if (isset($tab->content[$key]['pdffile'])) {
-                    $option->pdffile = $tab->content[$key]['pdffile'];
-                }
-                 *
-                 */
-
+                                
                 if (isset($tab->content[$key]['externalurl'])) {
                     $option->externalurl = $tab->content[$key]['externalurl'];
                 }
@@ -173,10 +166,6 @@ function tab_update_instance($tab) {
         $option = new object();
         $option->tabname = $value;
         $option->tabcontentorder = $tab->tabcontentorder[$key];
-        /* no longer used
-        $option->pdffile = $tab->pdffile[$key];
-         * 
-         */
         $option->externalurl = $tab->externalurl[$key];
         //tab content is now an array due to the new editor
         $draftitemid = $tab->content[$key]['itemid'];
@@ -186,7 +175,6 @@ function tab_update_instance($tab) {
         }
         $option->contentformat = $tab->content[$key]['format'];
 	$option->tabid = $tab->id;
-        $option->revision = $tab->revision[$key]+1;
         $option->timemodified = time();
 
         if (isset($tab->optionid[$key]) && !empty($tab->optionid[$key])){//existing tab record
@@ -215,8 +203,8 @@ function tab_update_instance($tab) {
                 }
             }
         }
-    }
 
+    }
     return $DB->update_record("tab", $tab);
 }
 
@@ -362,7 +350,7 @@ function tab_user_complete($course, $user, $mod, $tab) {
  * @return boolean
  * @todo Finish documenting this function
  **/
-function tab_print_recent_activity($course, $isteacher, $timestart) {
+function tab_print_recent_activity($course, $viewfullnames, $timestart) {
     global $CFG;
 
     return false;  //  True if anything was printed, otherwise false 
