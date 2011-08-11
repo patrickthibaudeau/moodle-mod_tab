@@ -60,6 +60,9 @@ class mod_tab_mod_form extends moodleform_mod {
         $repeatarray[] = $mform->createElement('hidden', 'revision', 1);
         $repeatarray[] = $mform->createElement('select', 'tabcontentorder', get_string('order','tab'),$taborderarray);
         $repeatarray[] = $mform->createElement('hidden', 'optionid', 0);
+        
+        
+        
 
         if ($this->_instance) {
             $repeatno=$DB->count_records('tab_content', array('tabid'=>$instance));
@@ -76,6 +79,8 @@ class mod_tab_mod_form extends moodleform_mod {
         }
         $mform->setType('tabcontentorder', PARAM_INT);
         $mform->setType('optionid', PARAM_INT);
+        $repeateloptions['content']['helpbutton'] = array('content', 'tab');
+        $mform->setType('content', PARAM_CLEAN);
 
 
 

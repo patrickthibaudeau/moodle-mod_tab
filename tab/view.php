@@ -9,6 +9,7 @@
 
     require("../../config.php");
     require_once("lib.php");
+    require_once("locallib.php");
     require_once($CFG->libdir.'/resourcelib.php');
     require_once($CFG->libdir.'/completionlib.php');
 
@@ -163,10 +164,15 @@
             }
             $content[$key] = file_rewrite_pluginfile_urls($options[$key]->tabcontent, 'pluginfile.php', $context->id, 'mod_tab', 'content', $options[$key]->id);
             $content[$key] = format_text($content[$key], $options[$key]->format, $editoroptions, $context);
-        }		//Enter into proper div
-			
+        }		
+	//Enter into proper div
+	//Check for pdf
+        if (preg_match('/\bpdf\b/i', $content[$key])){
+            $newcontent = resourcelib_embed_pdf(process_urls($content[$key]),'', get_string('clicktoopen','tab')) ;
+            $tabdisplay .=  '   <div class="TabbedPanelsContent"><p>'.$newcontent.'</p></div>'."\n";
+        } else {
             $tabdisplay .=  '   <div class="TabbedPanelsContent"><p>'.$content[$key].'</p></div>'."\n";
-			
+        }
 	}
         $tabdisplay .=  '	</div>'."\n";
         $tabdisplay .=  '</div>'."\n";

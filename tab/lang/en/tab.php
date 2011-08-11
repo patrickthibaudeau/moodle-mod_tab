@@ -5,6 +5,16 @@
 $string['ajouter'] = 'Add a new tab display';
 $string['addtab'] = 'Add a new tab';
 $string['changestyle'] = 'Modify stylesheet';
+$string['content'] = 'Tab content';
+$string['content_help'] = 'You can embed a pdf file by following these instructions:
+                            <br><ul>
+                             <li>type the name you would like to use for the link.</li>
+                             <li>Select the text and click on the inser/edit link button.</li>
+                             <li>Click on the browse button at the end of the link url field</li>
+                             <li>Upload your pdf file and then click insert</li>
+                             </ul><br>
+                             DO NOT ADD ANYTHING ELSE IN THE EDITOR.<br>
+                             Save and display. The pdf file will be embedded.';
 $string['css'] = 'Stylesheet';
 $string['displaymenu'] = 'Display tab menu';
 $string['displaymenuagree'] = 'Check if you would like to display menu';

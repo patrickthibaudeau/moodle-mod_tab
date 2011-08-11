@@ -53,3 +53,18 @@ function tab_get_editor_options($context) {
     global $CFG;
     return array('subdirs'=>1, 'maxbytes'=>$CFG->maxbytes, 'maxfiles'=>-1, 'changeformat'=>1, 'context'=>$context, 'noclean'=>1, 'trusttext'=>0);
 }
+
+function process_urls($string) {
+    global $CFG, $PAGE;
+         preg_match_all("/<a href=.*?<\/a>/", $string, $matches);
+           foreach ($matches[0] as $mtch) {
+             $mtch_bits = explode('"', $mtch);
+             $string = str_replace($mtch,  "{$mtch_bits[1]}", $string);
+           }
+           $string = str_replace('<div class="text_to_html">', '', $string);
+           $string = str_replace('</div>', '', $string);
+           $string = str_replace('<p>', '', $string);
+           $string = str_replace('</p>', '', $string);
+           
+        return $string;
+}
