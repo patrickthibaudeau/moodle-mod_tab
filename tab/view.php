@@ -12,6 +12,8 @@
     require_once("locallib.php");
     require_once($CFG->libdir.'/resourcelib.php');
     require_once($CFG->libdir.'/completionlib.php');
+	
+	
 
     $id = optional_param('id', 0, PARAM_INT); // Course Module ID, or
     $a  = optional_param('a', 0, PARAM_INT);  // tab ID
@@ -39,7 +41,7 @@
 
     require_course_login($course, true, $cm);
     $context = get_context_instance(CONTEXT_MODULE, $cm->id);
-    $coursecontext = get_context_instance_by_id(CONTEXT_COURSE, $course->id);
+    $coursecontext = get_context_instance(CONTEXT_COURSE, $course->id);
     
     require_capability('mod/tab:view', $context);
     add_to_log($course->id, "tab", "view", "view.php?id=$cm->id", "$tab->id");
@@ -65,7 +67,7 @@
 	$PAGE->requires->js('/mod/tab/js/SpryTabbedPanels.js',true);
 	$PAGE->requires->js('/mod/tab/js/tab.js');
 	$PAGE->requires->css('/mod/tab/SpryTabbedPanels.css');
-        $PAGE->requires->css('/mod/tab/styles.css');
+    $PAGE->requires->css('/mod/tab/styles.css');
         echo $OUTPUT->header();
 
         //echo $OUTPUT->heading(format_string($tab->name), 2, 'main', 'pageheading');
@@ -168,8 +170,8 @@
 	//Enter into proper div
 	//Check for pdf
         if (preg_match('/\bpdf\b/i', $content[$key])){
-            $newcontent = resourcelib_embed_pdf(process_urls($content[$key]),'', get_string('clicktoopen','tab')) ;
-            $tabdisplay .=  '   <div class="TabbedPanelsContent"><p>'.$newcontent.'</p></div>'."\n";
+            $pdfcontent = resourcelib_embed_general(process_urls($content[$key]),'', get_string('clicktoopen','tab'),'application/pdf') ;
+            $tabdisplay .=  '   <div class="TabbedPanelsContent"><p>'.$pdfcontent.'</p></div>'."\n";
         } else {
             $tabdisplay .=  '   <div class="TabbedPanelsContent"><p>'.$content[$key].'</p></div>'."\n";
         }

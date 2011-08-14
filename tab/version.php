@@ -8,7 +8,7 @@
  * @package tab
  **/
 
-$module->version  = 20110081000;  // The current module version (Date: YYYYMMDDXX)2010113000
+$module->version  = 2011081400;  // The current module version (Date: YYYYMMDDXX)2010113000
 $module->cron     = 0;           // Period for cron to check this module (secs)
 
 ?>

@@ -5,6 +5,7 @@
 $string['ajouter'] = 'Add a new tab display';
 $string['addtab'] = 'Add a new tab';
 $string['changestyle'] = 'Modify stylesheet';
+$string['clicktoopen'] = 'Click to open';
 $string['content'] = 'Tab content';
 $string['content_help'] = 'You can embed a pdf file by following these instructions:
                             <br><ul>

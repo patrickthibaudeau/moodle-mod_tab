@@ -158,14 +158,21 @@ function xmldb_tab_upgrade($oldversion=0) {
         // Fixed two undefined variables
 
         // tab savepoint reached
-        upgrade_mod_savepoint(true, 20110080800, 'tab');
+        upgrade_mod_savepoint(true, 2011080800, 'tab');
     }
-    if ($oldversion < 20110081000) {
+    if ($oldversion < 2011081000) {
 
         // Added PDF embedding
 
         // tab savepoint reached
-        upgrade_mod_savepoint(true, 20110081000, 'tab');
+        upgrade_mod_savepoint(true, 2011081000, 'tab');
+    }
+	if ($oldversion < 2011081400) {
+
+       	//Fixed course context error 
+
+        // tab savepoint reached
+        upgrade_mod_savepoint(true, 2011081400, 'tab');
     }
 
 }
