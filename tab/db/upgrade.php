@@ -174,6 +174,14 @@ function xmldb_tab_upgrade($oldversion=0) {
         // tab savepoint reached
         upgrade_mod_savepoint(true, 2011081400, 'tab');
     }
+    	if ($oldversion < 2012021400) {
+
+       	//Fixed PDF embedding 
+
+        // tab savepoint reached
+        upgrade_mod_savepoint(true, 2012021400, 'tab');
+    }
+
 
 }
 
