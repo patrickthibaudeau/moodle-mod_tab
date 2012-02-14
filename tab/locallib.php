@@ -61,10 +61,13 @@ function process_urls($string) {
              $mtch_bits = explode('"', $mtch);
              $string = str_replace($mtch,  "{$mtch_bits[1]}", $string);
            }
-           $string = str_replace('<div class="text_to_html">', '', $string);
-           $string = str_replace('</div>', '', $string);
-           $string = str_replace('<p>', '', $string);
-           $string = str_replace('</p>', '', $string);
+           $path = str_replace('<div class="text_to_html">', '', $string);
+           $path = str_replace('</div>', '', $path);
+           $path = str_replace('<p>', '', $path);
+           $path = str_replace('</p>', '', $path);
+           
+
+           $string = $path;
            
         return $string;
 }
@@ -76,39 +79,102 @@ function process_urls($string) {
  * @param string $clicktoopen
  * @return string html
  */
+//function tab_embed_general($fullurl, $title, $clicktoopen, $mimetype) {
+//    global $CFG, $PAGE;
+//
+//    if ($fullurl instanceof moodle_url) {
+//        $fullurl = $fullurl->out();
+//    }
+//
+//    $iframe = false;
+//
+//    $param = '<param name="src" value="'.$fullurl.'" />';
+//
+//    // IE can not embed stuff properly if stored on different server
+//    // that is why we use iframe instead, unfortunately this tag does not validate
+//    // in xhtml strict mode
+//    if ($mimetype === 'text/html' and check_browser_version('MSIE', 5)) {
+//        // The param tag needs to be removed to avoid trouble in IE.
+//        $param = '';
+//        if (preg_match('(^https?://[^/]*)', $fullurl, $matches)) {
+//            if (strpos($CFG->wwwroot, $matches[0]) !== 0) {
+//                $iframe = true;
+//            }
+//        }
+//    }
+//
+//    if (check_browser_version('Chrome')) {
+//        $iframe = true;
+//    }
+//
+//    if ($iframe) {
+//        $fullurl = str_replace('://', '%3A%2F%2F', $fullurl);
+//        $code = <<<EOT
+//<div class="resourcecontent resourcegeneral">
+//  <iframe src="http://docs.google.com/viewer?url=$fullurl&embedded=true" width="800" height="600" style="border: none;">
+//    $clicktoopen
+//  </iframe>
+//</div>
+//EOT;
+//    } else {
+//        $code = <<<EOT
+//<div class="resourcecontent resourcegeneral">
+//  <object id="resourceobject" data="$fullurl" type="$mimetype"  width="800" height="600">
+//    $param
+//    $clicktoopen
+//  </object>
+//</div>
+//EOT;
+//    }
+//
+//    // the size is hardcoded in the boject obove intentionally because it is adjusted by the following function on-the-fly
+//    $PAGE->requires->js_init_call('M.util.init_maximised_embed', array('resourceobject'), true);
+//
+//    return $code;
+//}
+
+/**
+ * Returns general link or file embedding html.
+ * @param string $fullurl
+ * @param string $title
+ * @param string $clicktoopen
+ * @return string html
+ */
 function tab_embed_general($fullurl, $title, $clicktoopen, $mimetype) {
     global $CFG, $PAGE;
 
-    if ($fullurl instanceof moodle_url) {
-        $fullurl = $fullurl->out();
-    }
-
     $iframe = false;
-
-    $param = '<param name="src" value="'.$fullurl.'" />';
-
+    $force_link = false;
     // IE can not embed stuff properly if stored on different server
     // that is why we use iframe instead, unfortunately this tag does not validate
     // in xhtml strict mode
     if ($mimetype === 'text/html' and check_browser_version('MSIE', 5)) {
-        // The param tag needs to be removed to avoid trouble in IE.
-        $param = '';
+        debugging("Detected IE", DEBUG_DEVELOPER);
         if (preg_match('(^https?://[^/]*)', $fullurl, $matches)) {
+            debugging("Detected IE w/ http://", DEBUG_DEVELOPER);
+            //make sure we aren't redirecting to a moodle page
             if (strpos($CFG->wwwroot, $matches[0]) !== 0) {
+                $force_link = true;
+            }
+            else{ //if it is a moodle then embed as iframe
                 $iframe = true;
             }
         }
     }
-
-    if (check_browser_version('Chrome')) {
-        $iframe = true;
-    }
-
-    if ($iframe) {
-        $fullurl = str_replace('://', '%3A%2F%2F', $fullurl);
+    $id_suffix = md5($fullurl);
+    //we force the link because IE doesn't support embedding web pages
+    if($force_link){
+        $clicktoopen = get_string('embed_fail_msg_ie','tab') . "<a href='$fullurl' target='_blank'>". get_string('embed_fail_link_text', 'tab') . '</a>';
         $code = <<<EOT
 <div class="resourcecontent resourcegeneral">
-  <iframe src="http://docs.google.com/viewer?url=$fullurl&embedded=true" width="800" height="600" style="border: none;">
+        $clicktoopen
+</div>
+EOT;
+    }
+    elseif ($iframe) {
+        $code = <<<EOT
+<div class="resourcecontent resourcegeneral">
+  <iframe id="resourceobject_$id_suffix" src="$fullurl">
     $clicktoopen
   </iframe>
 </div>
@@ -116,16 +182,15 @@ EOT;
     } else {
         $code = <<<EOT
 <div class="resourcecontent resourcegeneral">
-  <object id="resourceobject" data="$fullurl" type="$mimetype"  width="800" height="600">
-    $param
+  <object id="resourceobject_$id_suffix" data="$fullurl" type="$mimetype">
+    <param name="src" value="$fullurl" />
     $clicktoopen
   </object>
 </div>
 EOT;
     }
 
-    // the size is hardcoded in the boject obove intentionally because it is adjusted by the following function on-the-fly
-    $PAGE->requires->js_init_call('M.util.init_maximised_embed', array('resourceobject'), true);
+    $PAGE->requires->js_init_call('M.mod_tab.init_maximised_embed', array("resourceobject_$id_suffix"), true);
 
     return $code;
 }
