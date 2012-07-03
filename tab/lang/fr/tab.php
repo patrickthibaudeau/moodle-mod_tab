@@ -11,7 +11,7 @@ $string['content_help'] = 'Vous pouvez incorporer un fichier pdf en suivant ces 
 <li> cliquez sur le bouton Parcourir &agrave; la fin du champ URL du lien ;</ li>
 <li> t&eacute;l&eacute;chargez votre fichier pdf puis cliquez sur Ins&eacute;rer </ li>
 </ ul> <br>
-NE RIEN ajouter dans l'&eacute;diteur. <br>
+NE RIEN ajouter dans l\'&eacute;diteur. <br>
 Enregistrer et afficher. Le fichier pdf sera int&eacute;gr&eacute;'
 $string['css'] = 'Feuille de style';
 $string['displaymenu'] = 'Utiliser le menu d\'onglets';
