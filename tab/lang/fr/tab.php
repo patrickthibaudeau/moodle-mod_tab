@@ -30,7 +30,7 @@ $string['tab'] = 'Onglet';
 $string['tabadministration'] = 'Administration des onglets';
 $string['tabcontent'] = 'Contenu de l\'onglet';
 $string['tabname'] = 'Nom de l\'onglet';
-$string['taborder'] = 'Ordre des onglet dans le menu';
+$string['taborder'] = 'Ordre des onglets dans le menu';
 $string['tab:view'] = 'Vue des onglets';
-$string['updatethis'] = 'Update this tab display';
+$string['updatethis'] = 'Modifier les onglets';
 ?>
