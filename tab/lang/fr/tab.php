@@ -4,15 +4,19 @@ $string['ajouter'] = 'Ajouter un onglet';
 $string['addtab'] = 'Ajouter un onglet';
 $string['changestyle'] = 'Modifier la feuille de style';
 $string['clicktoopen'] = 'Cliquer pour ouvrir';
-$string['content_help'] = 'Vous pouvez incorporer un fichier pdf en suivant ces instructions:
-<br> <ul>
-<li> tapez le nom que vous souhaitez utiliser pour le lien ; </ li>
-<li> s&eacute;lectionnez le texte et cliquez sur le bouton de lien insertion / &eacute;dition ; </ li>
-<li> cliquez sur le bouton Parcourir &agrave; la fin du champ URL du lien ;</ li>
-<li> t&eacute;l&eacute;chargez votre fichier pdf puis cliquez sur Ins&eacute;rer </ li>
-</ ul> <br>
-NE RIEN ajouter dans l\'&eacute;diteur. <br>
-Enregistrer et afficher. Le fichier pdf sera int&eacute;gr&eacute;';
+$string['content_help'] = "Vous pouvez incorporer un fichier pdf en suivant ces instructions:
+
+- tapez le nom que vous souhaitez utiliser pour le lien ;
+
+- s&eacute;lectionnez le texte et cliquez sur le bouton de lien insertion / &eacute;dition ;
+
+- cliquez sur le bouton Parcourir &agrave; la fin du champ URL du lien ;
+
+- t&eacute;l&eacute;chargez votre fichier pdf puis cliquez sur Ins&eacute;rer.
+
+NE RIEN ajouter dans l\'&eacute;diteur.
+
+Enregistrer et afficher. Le fichier pdf sera int&eacute;gr&eacute;";
 $string['css'] = 'Feuille de style';
 $string['displaymenu'] = 'Utiliser le menu d\'onglets';
 $string['displaymenuagree'] = 'Cochez si vous désirez utiliser le menu';
